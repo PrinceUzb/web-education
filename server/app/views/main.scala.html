@@ -1,0 +1,18 @@
+@(title: String, webJarsUtil: org.webjars.play.WebJarsUtil)(content: Html)
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <title>@title</title>
+    @webJarsUtil.locate("css/bootstrap.css").css()
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/style.css")">
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("img/favicon.png")">
+    @webJarsUtil.locate("jquery.min.js").script()
+  </head>
+  <body>
+    @sections.header()
+    @content
+    @sections.footer()
+    @findScript("client-opt/main.js", "client-fastopt/main.js")
+  </body>
+</html>
