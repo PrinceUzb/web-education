@@ -12,6 +12,7 @@ lazy val server = project
     pipelineStages := Seq(digest, gzip),
     // triggers scalaJSPipeline when using compile or continuous compilation
     Compile / compile := ((Compile / compile) dependsOn scalaJSPipeline).value,
+    addCompilerPlugin("org.typelevel" % "kind-projector" % "0.11.3" cross CrossVersion.full),
     libraryDependencies ++= Dependencies.server ++ Seq(guice)
   )
   .enablePlugins(PlayScala)
@@ -20,6 +21,8 @@ lazy val server = project
 lazy val client = project
   .settings(
     scalaJSUseMainModuleInitializer := true,
+    resolvers += Resolver.sonatypeRepo("releases"),
+
     libraryDependencies ++= Seq(
       "org.scala-js" %%% "scalajs-dom" % "1.1.0",
       "org.querki" %%% "jquery-facade" % "2.0"

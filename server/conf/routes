@@ -3,8 +3,9 @@
 # ~~~~
 
 # Home page
-GET         /                    @org.informalgo.portfolio.controllers.Application.index
-POST        /contact-us          @org.informalgo.portfolio.controllers.Application.contactUs
+GET         /                    @org.prince.education.controllers.Application.index
+POST        /contact-us          @org.prince.education.controllers.Application.contactUs
+POST        /register            @org.prince.education.controllers.Application.register
 
 # Prefix must match `play.assets.urlPrefix`
 #GET        /assets/*file                 controllers.Assets.at(file)

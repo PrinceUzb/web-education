@@ -1,4 +1,4 @@
-package org.informalgo.portfolio
+package org.prince.education
 
 import org.querki.jquery._
 import org.scalajs.dom._
@@ -7,6 +7,7 @@ import org.scalajs.dom.raw.HTMLElement
 import scala.scalajs.js
 
 object ScalaJSExample {
+
   case class AjaxSuccess(data: js.Any, textStatus: String, jqXHR: JQueryXHR)
 
   def resCreator: (js.Any, String, JQueryXHR) => AjaxSuccess = (a, b, c) => AjaxSuccess(a, b, c)
@@ -40,10 +41,19 @@ object ScalaJSExample {
               elem.parentNode.removeChild(elem)
             })
       }
-    $(".set-bg").each {el =>
+    $(".set-bg").each { el =>
       val htmlEl = el.asInstanceOf[HTMLElement]
       val bg = el.getAttribute("data-setbg")
       htmlEl.style.backgroundImage = "url(" + bg + ")"
+    }
+
+    $("#regButton").click { (_: Event) =>
+      val name = $("#name").valueString
+      val email = $("#email").valueString
+      $.ajax(ajaxSettings("/register", s"""{"name": "$name", "email": "$email"}"""))
+        .done { (_: js.Any, _: String, res: JQueryXHR) =>
+          window.alert(res.responseText)
+        }
     }
   }
 }
