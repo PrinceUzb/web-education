@@ -3,9 +3,12 @@
 # ~~~~
 
 # Home page
-GET         /                    @org.prince.education.controllers.Application.index
-POST        /contact-us          @org.prince.education.controllers.Application.contactUs
-POST        /register            @org.prince.education.controllers.Application.register
+GET         /                    @org.education.controllers.Application.index
+POST        /contact-us          @org.education.controllers.Application.contactUs
+POST        /register            @org.education.controllers.Application.register
+GET         /login               @org.education.controllers.Application.login
+POST        /login               @org.education.controllers.Application.loginPost
+GET         /admin               @org.education.controllers.Application.admin
 
 # Prefix must match `play.assets.urlPrefix`
 #GET        /assets/*file                 controllers.Assets.at(file)

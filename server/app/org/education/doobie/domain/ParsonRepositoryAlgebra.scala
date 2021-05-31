@@ -1,3 +1,3 @@
-package org.prince.education.doobie.domain
+package org.education.doobie.domain
 
 trait ParsonRepositoryAlgebra[F[_]] extends CommonRepositoryAlgebra[F]

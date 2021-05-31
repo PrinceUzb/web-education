@@ -1,4 +1,4 @@
-package org.prince.education.doobie.common
+package org.education.doobie.common
 
 import cats.effect.{ContextShift, IO}
 import play.api.Configuration

@@ -107,6 +107,10 @@ ol {
 	margin-bottom: 25px;
 }
 
+.stati-form label {
+	color: white;
+}
+
 .section-title p {
 	margin-bottom: 0;
 	font-weight: 500;
@@ -289,7 +293,8 @@ ol {
 }
 
 .intro-newslatter input[type=text],
-.intro-newslatter input[type=email] {
+.intro-newslatter input[type=email] ,
+.intro-newslatter input[type=password] {
 	height: 53px;
 	width: 36.4%;
 	padding: 0 30px;
@@ -1485,7 +1490,8 @@ ol {
 		font-size: 43px;
 	}
 	.intro-newslatter input[type=text],
-	.intro-newslatter input[type=email] {
+	.intro-newslatter input[type=email],
+	.intro-newslatter input[type=password] {
 		width: 33%;
 	}
 	.intro-newslatter .site-btn {
@@ -1594,19 +1600,22 @@ ol {
 		text-align: center;
 	}
 	.intro-newslatter input[type=text],
-	.intro-newslatter input[type=email] {
+	.intro-newslatter input[type=email],
+	.intro-newslatter input[type=password] {
 		margin-bottom: 20px;
 		width: 47.6%;
 	}
 	.intro-newslatter input[type=text].last-s,
-	.intro-newslatter input[type=email].last-s {
+	.intro-newslatter input[type=email].last-s,
+	.intro-newslatter input[type=password].last-s {
 		margin-right: 0;
 	}
 	.search-warp {
 		padding: 40px 30px 30px;
 	}
 	.course-search-form input[type=text],
-	.course-search-form input[type=email] {
+	.course-search-form input[type=email],
+	.course-search-form input[type=password] {
 		width: 100%;
 		margin-bottom: 20px;
 		margin-right: 0;
@@ -1654,7 +1663,8 @@ ol {
 		padding-bottom: 100px;
 	}
 	.intro-newslatter input[type=text],
-	.intro-newslatter input[type=email] {
+	.intro-newslatter input[type=email],
+	.intro-newslatter input[type=password] {
 		margin-bottom: 20px;
 		width: 100%;
 		margin-right: 0;

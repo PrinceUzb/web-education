@@ -1,4 +1,4 @@
-package org.prince.education.doobie.config
+package org.education.doobie.config
 
 import cats.effect.{Async, ContextShift}
 import com.typesafe.config.Config

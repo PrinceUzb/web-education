@@ -1,9 +1,9 @@
-package org.prince.education.doobie.repository
+package org.education.doobie.repository
 
 import java.time._
 import java.sql.Timestamp
 import doobie.{LogHandler, Update0}
-import org.prince.education.protocols.UserProtocol.User
+import org.education.protocols.UserProtocol.User
 import doobie.implicits._
 import doobie.implicits.javasql._
 import doobie.util.Read

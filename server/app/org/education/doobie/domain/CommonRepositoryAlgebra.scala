@@ -1,6 +1,6 @@
-package org.prince.education.doobie.domain
+package org.education.doobie.domain
 
-import org.prince.education.protocols.UserProtocol.User
+import org.education.protocols.UserProtocol.User
 
 trait CommonRepositoryAlgebra[F[_]] {
   def createUser(user: User): F[Int]

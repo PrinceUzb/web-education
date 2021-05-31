@@ -1,0 +1,28 @@
+@this(webJarsUtil: org.webjars.play.WebJarsUtil)
+@()(implicit flash: Flash)
+@main("Login Page", webJarsUtil) {
+  <script type="text/javascript">
+          @flash.get("error").map { response =>
+            toastr.error("@response")
+          }
+          @flash.get("success").map { response =>
+            toastr.success("@response")
+          }
+  </script>
+  <section class="hero-section set-bg" data-setbg="@routes.Assets.versioned("img/bg.jpg")">
+    <div class="container">
+      <div class="hero-text text-white">
+        <h2>Saytga kirish</h2>
+      </div>
+      <div class="row">
+        <div class="col-lg-10 offset-lg-1">
+          <form class="intro-newslatter" action="@org.education.controllers.routes.Application.login" method="post">
+            <input type="email" id="email" name="email" class="last-s" placeholder="E-mail">
+            <input type="password" id="pass" name="password" placeholder="Password">
+            <button class="site-btn" id="loginButton">Kirish</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+}

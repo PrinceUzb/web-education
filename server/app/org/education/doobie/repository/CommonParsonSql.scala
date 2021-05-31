@@ -1,7 +1,7 @@
-package org.prince.education.doobie.repository
+package org.education.doobie.repository
 
 import doobie._
-import org.prince.education.protocols.UserProtocol.User
+import org.education.protocols.UserProtocol.User
 
 trait CommonParsonSql {
   def createUser(user: User): Update0

@@ -1,10 +1,10 @@
-package org.prince.education.doobie.repository
+package org.education.doobie.repository
 
 import cats.effect.Bracket
 import doobie._
 import doobie.implicits._
-import org.prince.education.doobie.domain.ParsonRepositoryAlgebra
-import org.prince.education.protocols.UserProtocol.User
+import org.education.doobie.domain.ParsonRepositoryAlgebra
+import org.education.protocols.UserProtocol.User
 
 abstract class CommonParsonRepositoryInterpreter[F[_] : Bracket[*[_], Throwable]](val xa: Transactor[F])
   extends ParsonRepositoryAlgebra[F] {

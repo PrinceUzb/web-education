@@ -1,0 +1,23 @@
+@this(webJarsUtil: org.webjars.play.WebJarsUtil)
+@()
+  @main("Admin Page", webJarsUtil) {
+    <section class="hero-section set-bg" data-setbg="@routes.Assets.versioned("img/bg.jpg")">
+      <div class="container">
+        <div class="hero-text text-white">
+          <h2>Hush kelibsiz!</h2>
+        </div>
+        <form action="@org.education.controllers.routes.Application.login" method="post" class="stati-form">
+          <div class="form-group">
+            <label for="title">Mavzu:</label>
+            <input type="text" class="form-control" id="title" placeholder="Mavzu nomini kiriting" name="title" required>
+          </div>
+          <div class="form-group">
+            <label for="video">Video tanlang:</label>
+            <input type="file" class="form-control" id="video" placeholder="" name="video" required>
+          </div>
+          <button type="submit" class="btn btn-danger">Joylash</button>
+        </form>
+      </div>
+    </section>
+
+  }

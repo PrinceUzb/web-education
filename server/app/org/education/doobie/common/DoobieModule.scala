@@ -1,9 +1,9 @@
-package org.prince.education.doobie.common
+package org.education.doobie.common
 
 import cats.effect._
 import doobie.Transactor
-import org.prince.education.doobie.config.DatabaseConfig
-import org.prince.education.doobie.repository.ParsonRepositoryInterpreter
+import org.education.doobie.config.DatabaseConfig
+import org.education.doobie.repository.ParsonRepositoryInterpreter
 import play.api.Configuration
 
 class DoobieModule[F[_] : Effect : ContextShift](configuration: Configuration) {

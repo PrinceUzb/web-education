@@ -1,4 +1,4 @@
-package org.prince.education.protocols
+package org.education.protocols
 
 import java.time.LocalDateTime
 

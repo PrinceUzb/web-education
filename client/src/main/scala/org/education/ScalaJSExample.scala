@@ -1,4 +1,4 @@
-package org.prince.education
+package org.education
 
 import org.querki.jquery._
 import org.scalajs.dom._
