@@ -4,11 +4,13 @@
 <html lang="en">
   <head>
     <title>@title</title>
-    @webJarsUtil.locate("css/bootstrap.css").css()
+    @webJarsUtil.locate("bootstrap.css").css()
     @webJarsUtil.locate("toastr.css").css()
+    <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/style.css")">
     <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("img/favicon.png")">
     @webJarsUtil.locate("jquery.min.js").script()
+    <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
     @webJarsUtil.locate("toastr.js").script()
   </head>
   <body>

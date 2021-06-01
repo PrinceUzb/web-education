@@ -9,6 +9,8 @@ POST        /register            @org.education.controllers.Application.register
 GET         /login               @org.education.controllers.Application.login
 POST        /login               @org.education.controllers.Application.loginPost
 GET         /admin               @org.education.controllers.Application.admin
+GET         /courses             @org.education.controllers.Application.courses
+POST        /create-course       @org.education.controllers.Application.createCourse
 
 # Prefix must match `play.assets.urlPrefix`
 #GET        /assets/*file                 controllers.Assets.at(file)

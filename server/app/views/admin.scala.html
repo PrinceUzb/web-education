@@ -1,23 +1,57 @@
 @this(webJarsUtil: org.webjars.play.WebJarsUtil)
-@()
-  @main("Admin Page", webJarsUtil) {
-    <section class="hero-section set-bg" data-setbg="@routes.Assets.versioned("img/bg.jpg")">
-      <div class="container">
-        <div class="hero-text text-white">
-          <h2>Hush kelibsiz!</h2>
-        </div>
-        <form action="@org.education.controllers.routes.Application.login" method="post" class="stati-form">
-          <div class="form-group">
-            <label for="title">Mavzu:</label>
-            <input type="text" class="form-control" id="title" placeholder="Mavzu nomini kiriting" name="title" required>
-          </div>
-          <div class="form-group">
-            <label for="video">Video tanlang:</label>
-            <input type="file" class="form-control" id="video" placeholder="" name="video" required>
-          </div>
-          <button type="submit" class="btn btn-danger">Joylash</button>
-        </form>
+@()(implicit flash: Flash)
+@main("Admin Sahifasi", webJarsUtil) {
+  <script type="text/javascript">
+          @flash.get("error").map { response =>
+          toastr.error("@response")
+          }
+          @flash.get("success").map { response =>
+          toastr.success("@response")
+          }
+  </script>
+  <div class="page-info-section set-bg" data-setbg="@routes.Assets.versioned("img/page-bg/3.jpg")">
+    <div class="container">
+      <div class="site-breadcrumb">
+        <a href="#">Home</a>
+        <span>Courses</span>
       </div>
-    </section>
+    </div>
+  </div>
+  <section class="blog-page spad pb-0">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-9">
+            <!-- blog post -->
+            <h3 class="text-danger">How to create the perfect resume</h3>
+          <form action="@org.education.controllers.routes.Application.createCourse" method="post" class="stati-form" enctype="multipart/form-data">
+            <div class="form-group">
+              <label for="title">Mavzu:</label>
+              <input type="text" class="form-control" id="title" placeholder="Mavzu nomini kiriting" name="title" required>
+            </div>
+            <div class="form-group">
+              <label for="exampleFormControlSelect1">Example select</label>
+              <select class="form-control" id="exampleFormControlSelect1" name="category">
+                <option value="HTML">HTML</option>
+                <option value="CSS">CSS</option>
+                <option value="BOOTSTRAP">BOOTSTRAP</option>
+                <option value="JAVASCRIPT">JAVASCRIPT</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="video">Video tanlang:</label>
+              <input type="file" class="form-control" id="video" placeholder="" name="video" accept="video/mp4, video/mpeg, video/3gpp" required>
+            </div>
+            <textarea id="my-text-area" name="description"></textarea>
+            <button type="submit" class="btn btn-danger">Joylash</button>
+            <br>
+            <br>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script>
+          var easyMDE = new EasyMDE({element: document.getElementById('my-text-area')});
+  </script>
 
-  }
+}

@@ -2,20 +2,23 @@ package org.education.controllers
 
 import com.typesafe.scalalogging.LazyLogging
 import org.education.doobie.common.DoobieUtil
-import org.education.protocols.UserProtocol.User
+import org.education.protocols.UserProtocol.{Course, User}
 import org.webjars.play.WebJarsUtil
 import play.api.Configuration
 import play.api.data.Form
 import play.api.data.Forms.{mapping, nonEmptyText}
+import play.api.libs.Files
 import play.api.libs.json.{JsValue, Json, OFormat}
 import play.api.mvc._
 import views.html._
 
+import java.nio.file.Paths
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import javax.inject._
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration.{DurationInt, FiniteDuration}
-import scala.util.Random
+import scala.util.{Random, Try}
 
 @Singleton
 class Application @Inject()(val controllerComponents: ControllerComponents,
@@ -23,6 +26,7 @@ class Application @Inject()(val controllerComponents: ControllerComponents,
                             indexTemplate: index,
                             loginTemplate: login,
                             adminTemplate: admin,
+                            coursesTemplate: courses,
                             implicit val webJarsUtil: WebJarsUtil)
                            (implicit val ec: ExecutionContext)
   extends BaseController with LazyLogging {
@@ -54,10 +58,39 @@ class Application @Inject()(val controllerComponents: ControllerComponents,
     Ok(indexTemplate())
   }
 
+  def courses: Action[AnyContent] = Action.async {
+    DoobieModule.parsonRepo.getAllCourses.unsafeToFuture().map { courses =>
+      Ok(coursesTemplate(courses))
+    }
+  }
+
   def contactUs: Action[JsValue] = Action(parse.json) { implicit request =>
     val name = (request.body \ "name").as[String]
     println(name)
     Ok(Json.toJson("OK"))
+  }
+
+  def createCourse: Action[MultipartFormData[Files.TemporaryFile]]
+  = Action.async(parse.multipartFormData) { implicit request =>
+    request.body
+      .file("video").map { file =>
+      Try{
+        val body = request.body.asFormUrlEncoded
+        val title = body.get("title").flatMap(_.headOption).getOrElse("")
+        val category = body.get("category").flatMap(_.headOption).getOrElse("")
+        val description = body.get("description").flatMap(_.headOption).getOrElse("")
+        val videoName = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss")) + ".mp4"
+        DoobieModule.parsonRepo.createCourse(Course(LocalDateTime.now, title, category, videoName, description)).unsafeToFuture().map { _ =>
+          file.ref.copyTo(Paths.get(s"server/public/courses/$videoName"), replace = true)
+          Redirect(org.education.controllers.routes.Application.admin).flashing("success" -> "Muvofaqiyatli qo'shildi!")
+        }
+      } getOrElse {
+        Future.successful(Redirect(org.education.controllers.routes.Application.admin).flashing("error" -> "Iltimos hammasi to'g'ri ekanini tekshiring!"))
+      }
+
+      }.getOrElse {
+        Future.successful(Redirect(org.education.controllers.routes.Application.admin).flashing("error" -> "Video yuklashda xatolik yuz berdi!"))
+      }
   }
 
   def register: Action[JsValue] = Action.async(parse.json) { implicit request =>
@@ -114,7 +147,7 @@ class Application @Inject()(val controllerComponents: ControllerComponents,
       })
   }
 
-  def admin: Action[AnyContent] = Action {
+  def admin: Action[AnyContent] = Action { implicit request =>
     Ok(adminTemplate())
   }
 

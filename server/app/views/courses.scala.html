@@ -1,0 +1,92 @@
+@import org.education.protocols.UserProtocol.Course
+@import java.time.format.DateTimeFormatter
+@this(webJarsUtil: org.webjars.play.WebJarsUtil)
+@(courses: List[Course])
+@main("Online Darslar", webJarsUtil) {
+
+  <div class="page-info-section set-bg" data-setbg="@routes.Assets.versioned("img/page-bg/1.jpg")">
+    <div class="container">
+      <div class="site-breadcrumb">
+        <a href="#">Home</a>
+        <span>Courses</span>
+      </div>
+    </div>
+  </div>
+  <section class="blog-page spad pb-0">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-9">
+            <!-- blog post -->
+          @for(course <- courses) {
+          <div class="blog-post">
+            <video width="100%" controls>
+              <source src="@routes.Assets.versioned(s"courses/${course.video}")" type="video/mp4">
+            </video>
+            <h3>@course.title</h3>
+            <div class="blog-metas">
+              <div class="blog-meta">
+                <a href="#">@course.category</a>
+              </div>
+              <div class="blog-meta">
+                <a href="#">@course.createdAt.format(DateTimeFormatter.ofPattern("MMM d, yyyy"))</a>
+              </div>
+              <div class="blog-meta">
+                <a href="#">@{course.description.split(" ").length / 20} Comments</a>
+              </div>
+            </div>
+            <p>@course.description</p>
+            <a href="#" class="site-btn readmore">Read More</a>
+          </div>
+          }
+        </div>
+        <div class="col-lg-3 col-md-5 col-sm-9 sidebar">
+          <div class="sb-widget-item">
+            <form class="search-widget">
+              <input type="text" placeholder="Search">
+              <button><i class="fa fa-search"></i></button>
+            </form>
+          </div>
+          <div class="sb-widget-item">
+            <h4 class="sb-w-title">Categories</h4>
+            <ul>
+              <li><a href="#">Developement</a></li>
+              <li><a href="#">Social Media</a></li>
+              <li><a href="#">Press</a></li>
+              <li><a href="#">Events & Lifestyle</a></li>
+              <li><a href="#">Uncategorizes</a></li>
+            </ul>
+          </div>
+          <div class="sb-widget-item">
+            <h4 class="sb-w-title">Archives</h4>
+            <ul>
+              <li><a href="#">February 2018</a></li>
+              <li><a href="#">March 2018</a></li>
+              <li><a href="#">April 2018</a></li>
+              <li><a href="#">May 2018</a></li>
+              <li><a href="#">June 2018</a></li>
+            </ul>
+          </div>
+          <div class="sb-widget-item">
+            <h4 class="sb-w-title">Archives</h4>
+            <div class="tags">
+              <a href="#">education</a>
+              <a href="#">courses</a>
+              <a href="#">development</a>
+              <a href="#">design</a>
+              <a href="#">on line courses</a>
+              <a href="#">wp</a>
+              <a href="#">html5</a>
+              <a href="#">music</a>
+            </div>
+          </div>
+          <div class="sb-widget-item">
+            <div class="add">
+              <a href="#"><img src="@routes.Assets.versioned("img/add.jpg")" alt=""></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  }

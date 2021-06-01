@@ -26,3 +26,12 @@ CREATE TABLE "users"
     "password"            VARCHAR   NOT NULL,
     "phone"               VARCHAR   NULL
 );
+CREATE TABLE "courses"
+(
+    "id"          SERIAL PRIMARY KEY,
+    "created_at"  TIMESTAMP NOT NULL,
+    "title"       VARCHAR   NOT NULL,
+    "category"    VARCHAR   NOT NULL,
+    "video"       VARCHAR   NOT NULL,
+    "description" VARCHAR   NOT NULL
+);

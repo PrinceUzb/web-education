@@ -1,6 +1,6 @@
 @this(webJarsUtil: org.webjars.play.WebJarsUtil)
 @()(implicit flash: Flash)
-@main("Login Page", webJarsUtil) {
+@main("Kirish", webJarsUtil) {
   <script type="text/javascript">
           @flash.get("error").map { response =>
             toastr.error("@response")
