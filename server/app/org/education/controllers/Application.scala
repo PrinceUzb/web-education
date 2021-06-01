@@ -84,7 +84,7 @@ class Application @Inject()(val controllerComponents: ControllerComponents,
         val description = body.get("description").flatMap(_.headOption).getOrElse("")
         val videoName = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss")) + ".mp4"
         DoobieModule.parsonRepo.createCourse(Course(LocalDateTime.now, title, category, videoName, description)).unsafeToFuture().map { _ =>
-          file.ref.copyTo(Paths.get(filePath + videoName), replace = true)
+          file.ref.copyTo(Paths.get(videoName), replace = true)
           Redirect(org.education.controllers.routes.Application.admin).flashing("success" -> "Muvofaqiyatli qo'shildi!")
         }
       } getOrElse {
