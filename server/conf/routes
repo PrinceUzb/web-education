@@ -15,5 +15,5 @@ POST        /create-course       @org.education.controllers.Application.createCo
 # Prefix must match `play.assets.urlPrefix`
 #GET        /assets/*file                 controllers.Assets.at(file)
 GET         /assets/*file        @controllers.Assets.versioned(path="/public", file: Asset)
-GET         /file/*file          @org.education.controllers.Application.at(path="../courses", file)
+GET         /file/*file          @org.education.controllers.Application.at(path="./conf", file)
 ->          /webjars             webjars.Routes
