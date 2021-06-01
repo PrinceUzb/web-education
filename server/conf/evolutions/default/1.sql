@@ -14,5 +14,5 @@ CREATE TABLE "courses"
     "title"       VARCHAR   NOT NULL,
     "category"    VARCHAR   NOT NULL,
     "video"       VARCHAR   NOT NULL,
-    "description" VARCHAR   NOT NULL,
+    "description" VARCHAR   NOT NULL
 );
