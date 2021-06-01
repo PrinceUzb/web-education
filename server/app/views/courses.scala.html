@@ -20,7 +20,7 @@
           @for(course <- courses) {
           <div class="blog-post">
             <video width="100%" controls>
-              <source src="@routes.Assets.versioned(s"courses/${course.video}")" type="video/mp4">
+              <source src="/file/@{course.video}" type="video/mp4">
             </video>
             <h3>@course.title</h3>
             <div class="blog-metas">

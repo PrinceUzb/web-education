@@ -4,7 +4,7 @@ import com.typesafe.scalalogging.LazyLogging
 import org.education.doobie.common.DoobieUtil
 import org.education.protocols.UserProtocol.{Course, User}
 import org.webjars.play.WebJarsUtil
-import play.api.Configuration
+import play.api.{Configuration, Environment, Mode}
 import play.api.data.Form
 import play.api.data.Forms.{mapping, nonEmptyText}
 import play.api.libs.Files
@@ -12,17 +12,20 @@ import play.api.libs.json.{JsValue, Json, OFormat}
 import play.api.mvc._
 import views.html._
 
+import java.io.File
 import java.nio.file.Paths
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import javax.inject._
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration.{DurationInt, FiniteDuration}
+import scala.util.matching.Regex
 import scala.util.{Random, Try}
 
 @Singleton
 class Application @Inject()(val controllerComponents: ControllerComponents,
                             val configuration: Configuration,
+                            environment: Environment,
                             indexTemplate: index,
                             loginTemplate: login,
                             adminTemplate: admin,
@@ -30,7 +33,7 @@ class Application @Inject()(val controllerComponents: ControllerComponents,
                             implicit val webJarsUtil: WebJarsUtil)
                            (implicit val ec: ExecutionContext)
   extends BaseController with LazyLogging {
-
+  val filePath = configuration.get[String]("temp-file-path")
   private val DoobieModule = DoobieUtil.doobieModule(configuration)
   val Email = "Maftuna@webuni.uz"
   val Pass = "123"
@@ -81,7 +84,7 @@ class Application @Inject()(val controllerComponents: ControllerComponents,
         val description = body.get("description").flatMap(_.headOption).getOrElse("")
         val videoName = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss")) + ".mp4"
         DoobieModule.parsonRepo.createCourse(Course(LocalDateTime.now, title, category, videoName, description)).unsafeToFuture().map { _ =>
-          file.ref.copyTo(Paths.get(s"server/public/courses/$videoName"), replace = true)
+          file.ref.copyTo(Paths.get(filePath + videoName), replace = true)
           Redirect(org.education.controllers.routes.Application.admin).flashing("success" -> "Muvofaqiyatli qo'shildi!")
         }
       } getOrElse {
@@ -150,6 +153,22 @@ class Application @Inject()(val controllerComponents: ControllerComponents,
   def admin: Action[AnyContent] = Action { implicit request =>
     Ok(adminTemplate())
   }
+  val AbsolutePath: Regex = """^(/|[a-zA-Z]:\\).*""".r
+  def at(rootPath: String, file: String): Action[AnyContent] = Action.async {
+    Future {
+      val fileToServe = rootPath match {
+        case AbsolutePath(_) => new File(rootPath, file)
+        case _               => new File(environment.getFile(rootPath), file)
+      }
+      println(fileToServe)
+      if (fileToServe.exists) {
+        println(fileToServe + "555")
 
+        Ok.sendFile(fileToServe, inline = true).withHeaders(CACHE_CONTROL -> "max-age=3600")
+      } else {
+        NotFound
+      }
+    }
+    }
   def generatePass: String = new Randoms().alphanumeric.take(7).mkString
 }
